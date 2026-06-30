@@ -9,11 +9,12 @@ async fn hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
+    let server = HttpServer::new(|| {
         App::new()
             .service(hello)
     })
-    .bind(("127.0.0.1", 8080))?
-    .run()
-    .await
+    .bind(("127.0.0.1", 8080))?;
+
+    okay!("Server successfully started and ready to accept requests");
+    server.run().await
 }
